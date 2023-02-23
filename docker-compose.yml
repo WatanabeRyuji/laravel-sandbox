@@ -9,7 +9,7 @@ version: "3.9"
 # サービスコンテナの集まり
 services:
     # プロジェクト名
-    php:
+    app:
         # コンテナ名
         container_name: laravel_sandbox
         # ソースからコンテナをbuildするための情報を指定
@@ -22,10 +22,10 @@ services:
         working_dir: /app
         # コンテナのポートを後悔する　[ホスト:コンテナ]
         ports:
-            - "8000:8000"
+            - "9000:9000"
         # コンテナイメージによって宣言済みのデフォルトコマンドを上書きする。
-        command: >
-            php artisan serve --host=0.0.0.0
+#        command: >
+#            php artisan serve --host=0.0.0.0
         # サービスコンテナがアクセスできるようにする必要があるホスト上のパスか名前付きボリュームを定義する
         ## volumesとは
         # Dockerのコンテナ内で作成したデータを永続するための場所
