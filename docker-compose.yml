@@ -1,0 +1,36 @@
+### Docker-composeとは、
+# 複数のコンテナで構成されるアプリケーションについて、
+# Dockerイメージのビルドや各コンテナの起動・停止などをより簡単に行えるようにするツール
+# https://docs.docker.jp/compose/compose-file/index.html#
+
+# composeのバージョン
+version: "3.9"
+
+# サービスコンテナの集まり
+services:
+    # プロジェクト名
+    php:
+        # コンテナ名
+        container_name: laravel_sandbox
+        # ソースからコンテナをbuildするための情報を指定
+        build:
+            #
+            context: .
+            # どのdockerFileを参照するか
+            dockerfile: ./.docker/php/Dockerfile
+        # コンテナの作業ディレクトリを上書きする
+        working_dir: /app
+        # コンテナのポートを後悔する　[ホスト:コンテナ]
+        ports:
+            - "8000:8000"
+        # コンテナイメージによって宣言済みのデフォルトコマンドを上書きする。
+        command: >
+            php artisan serve --host=0.0.0.0
+        # サービスコンテナがアクセスできるようにする必要があるホスト上のパスか名前付きボリュームを定義する
+        ## volumesとは
+        # Dockerのコンテナ内で作成したデータを永続するための場所
+        # コンテナに保存したデータはコンテナを破棄すると消える
+        # volumesに保存したデータはコンテナを破棄しても残り再利用できる。
+        volumes:
+            -   .:/app
+            -   ./.docker/php/php.ihi:/usr/local/etc/php/conf.d/php.ini
